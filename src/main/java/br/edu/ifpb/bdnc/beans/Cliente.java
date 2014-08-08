@@ -16,16 +16,16 @@ import java.sql.SQLOutput;
  * @author magdiel-bruno
  */
 public class Cliente implements SQLData{
-    private long codigo;
+    private int codigo;
     private String nome;
     private Endereco endereco;
     private Telefone telefone;
 
-    public long getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(long codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
     
@@ -60,7 +60,7 @@ public class Cliente implements SQLData{
 
     @Override
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
-        this.setCodigo(stream.readLong());
+        this.setCodigo(stream.readInt());
         this.setNome(stream.readString());
         this.setEndereco((Endereco)stream.readObject());
         this.setTelefone((Telefone) stream.readObject());
@@ -68,7 +68,7 @@ public class Cliente implements SQLData{
 
     @Override
     public void writeSQL(SQLOutput stream) throws SQLException {
-        stream.writeLong(this.getCodigo());
+        stream.writeInt(this.getCodigo());
         stream.writeString(this.getNome());
         stream.writeObject(this.getEndereco());
         stream.writeObject(this.getTelefone());
