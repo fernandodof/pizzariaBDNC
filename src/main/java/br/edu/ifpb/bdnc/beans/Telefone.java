@@ -37,7 +37,7 @@ public class Telefone implements SQLData{
     
     @Override
     public String getSQLTypeName() throws SQLException {
-        return "TELEFONE";
+        return "TELEFONE_CLIENTE";
     }
 
     @Override
@@ -50,5 +50,10 @@ public class Telefone implements SQLData{
     public void writeSQL(SQLOutput stream) throws SQLException {
         stream.writeInt(this.getDdd());
         stream.writeString(this.getNumero());
+    }
+
+    @Override
+    public String toString() {
+        return "Telefone{" + "ddd=" + ddd + ", numero=" + numero + '}';
     }
 }

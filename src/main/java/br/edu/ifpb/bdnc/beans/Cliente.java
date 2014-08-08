@@ -73,4 +73,9 @@ public class Cliente implements SQLData{
         stream.writeObject(this.getEndereco());
         stream.writeObject(this.getTelefone());
     }
+
+    @Override
+    public String toString() {
+        return "Cliente{" + "codigo=" + codigo + ", nome=" + nome + ", endereco=" + endereco + ", telefone=" + telefone + '}';
+    }
 }

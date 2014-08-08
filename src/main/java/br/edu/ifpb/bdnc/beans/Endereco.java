@@ -71,4 +71,9 @@ public class Endereco implements SQLData{
         stream.writeString(this.getNumero());
         stream.writeString(this.getCep());
     }
+
+    @Override
+    public String toString() {
+        return "Endereco{" + "rua=" + rua + ", bairro=" + bairro + ", numero=" + numero + ", cep=" + cep + '}';
+    }
 }

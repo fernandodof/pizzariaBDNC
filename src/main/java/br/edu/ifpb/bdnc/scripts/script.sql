@@ -7,7 +7,7 @@ CREATE OR REPLACE TYPE endereco AS OBJECT(
 );
 
 --criando tipo telefone //MBMI
-create or replace type telefone as object(
+create or replace type telefone_cliente as object(
         ddd number,
         numero varchar(10)
 );
@@ -17,7 +17,7 @@ CREATE OR REPLACE TYPE cliente AS OBJECT(
 	codigo INT,
 	nome VARCHAR(100),
 	ende endereco,
-	tel telefone,
+	tel telefone_cliente
 );
 
 --criando tabela para clientes
