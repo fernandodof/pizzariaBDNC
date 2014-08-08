@@ -6,15 +6,18 @@ CREATE OR REPLACE TYPE endereco AS OBJECT(
 	cep VARCHAR(10)
 );
 
---criando tabela para endereco
-CREATE TABLE enderecos OF endereco;
+--criando tipo telefone //MBMI
+create or replace type telefone as object(
+        ddd number,
+        numero varchar(10)
+);
 
 --criando tipo cliente
 CREATE OR REPLACE TYPE cliente AS OBJECT(
 	codigo INT,
 	nome VARCHAR(100),
 	ende endereco,
-	telefone VARCHAR(20)
+	tel telefone,
 );
 
 --criando tabela para clientes
@@ -25,7 +28,7 @@ CREATE SEQUENCE cliente_seq START WITH 1 INCREMENT BY 1 nomaxvalue;
 
 ---criando gatilho para o codigo do cliente
 CREATE TRIGGER cliente_trigger
-BEFORE INSERT ON t1
+BEFORE INSERT ON clientes
 FOR EACH ROW
    BEGIN
      SELECT cliente_seq.NEXTVAL INTO :new.codigo FROM dual;
