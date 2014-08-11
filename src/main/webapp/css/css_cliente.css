@@ -1,0 +1,67 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 09/08/2014, 16:27:16
+    Author     : magdiel-bruno
+*/
+
+
+#container{
+    width: 800px;
+    height: 600px;
+    border: 1px solid black;
+}
+
+#container_barra_menu{
+    width: 99.8%;
+    height: 5%;
+    border: 1px solid red;
+}
+
+#menu1{
+    width: 15%;
+    height: 90%;
+    border: 1px solid green;
+    margin-left: 5%;
+    float: left;
+    text-align: center;
+}
+
+#menu2{
+    width: 15%;
+    height: 90%;
+    border: 1px solid green;
+    margin-left: 1%;
+    float: left;
+    text-align: center;
+}
+
+
+#container_logo{
+    width: 99.8%;
+    height: 15%;
+    margin-top: 0.05%;
+    border: 1px solid yellow;
+}
+
+#container_barra_menu_bottom{
+    width: 20%;
+    height: 5%;
+    border: 1px solid red;
+    margin-top: 0.05%;
+    margin-left: 5%;
+    text-align: center;
+}
+
+#container_form_cadastro{
+    width: 60%;
+    height: 60%;
+    border: 1px solid yellowgreen;
+    margin-top: 5%;
+    margin-left: 20%;
+    text-align: center;
+}
+

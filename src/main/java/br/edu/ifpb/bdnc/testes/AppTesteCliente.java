@@ -26,42 +26,42 @@ public class AppTesteCliente {
 
         //endereço
         Endereco e = new Endereco();
-        e.setBairro("Centro 2");
-        e.setCep("89898-222");
-        e.setNumero("222");
-        e.setRua("Severo Snape");
+        e.setBairro("Centro 5");
+        e.setCep("84348-222");
+        e.setNumero("224");
+        e.setRua("Harry Potter");
 
         //telefone
         Telefone t = new Telefone();
         t.setDdd(83);
-        t.setNumero("2222-0909");
+        t.setNumero("22432-0909");
 
         //Cliente
         Cliente c = new Cliente();
-        c.setNome("Magno");
+        c.setNome("Ronaldo");
         c.setEndereco(e);
         c.setTelefone(t);
-        c.setCodigo(1);
-        try {
+        
+            
+        try {            
             //Persistindo
             //cdb.persistir(c);
             
             //Atualizando
+            //c.setCodigo(5);
             //cdb.atualizar(c);
             
             //Deletando
-            cdb.excluir(1);
+            //cdb.excluir(3);
             
             //Listando
             List<Cliente> clientes = cdb.listarTodos();
-            if(clientes == null){
-                System.out.println("Tabela Vazia");
-            }else{
-                System.out.println(clientes);
+            for (Cliente cl : clientes) {
+                System.out.println("Clientes: "+cl);
             }
-
+            
         } catch (SQLException ex) {
-           ex.printStackTrace();
+            Logger.getLogger(AppTesteCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
