@@ -7,7 +7,7 @@ CREATE OR REPLACE TYPE endereco AS OBJECT(
 );
 
 --criando tipo telefone //MBMI
-create or replace type telefone as object(
+create or replace type telefone_cliente as object(
         ddd number,
         numero varchar(10)
 );
@@ -17,7 +17,7 @@ CREATE OR REPLACE TYPE cliente AS OBJECT(
 	codigo INT,
 	nome VARCHAR(100),
 	ende endereco,
-	tel telefone,
+	tel telefone_cliente
 );
 
 --criando tabela para clientes
@@ -35,9 +35,7 @@ FOR EACH ROW
    END;
 
 --Inserindo cliente (null para codigo, que será gerado pela sequencia+gatilho)
-INSERT INTO clientes VALUES (cliente(null,'Cliente 1', endereco('rua 1','bairro 1','numero 1','cep 1'),'(83)1234-5678'));   
-
-
+INSERT INTO clientes VALUES (cliente(null,'Cliente 1', endereco('rua 1','bairro 1','numero 1','cep 1'),Telefone_cliente(83,'1234-5678')));   
 
 -----------
 --criando tipo produto
@@ -49,11 +47,11 @@ CREATE OR REPLACE TYPE produto AS OBJECT(
 
 --criando tipo pizza que herda de produto
 CREATE OR REPLACE TYPE pizza UNDER produto(
-	ingredientes VARCHAR(150)
+	ingredientes VARCHAR(200)
 );
 
 --criando tabela para produtos
-CREATE TABLE produtos OF produto
+CREATE TABLE produtos OF produto;
 
 --criando squencia para produto
 CREATE SEQUENCE produto_seq START WITH 1 INCREMENT BY 1 nomaxvalue; 
