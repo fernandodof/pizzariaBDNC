@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package br.edu.ifpb.bdnc.dao;
 
 import br.edu.ifpb.bdnc.banco.Oracle;
@@ -17,27 +16,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import oracle.jdbc.OracleResultSet;
 
 /**
  *
  * @author magdiel-bruno
  */
 public class ClienteDAO {
-    
-    public void persistir(Cliente c) throws SQLException{
-        
+
+    public void persistir(Cliente c) throws SQLException {
+
         Connection connection = null;
         PreparedStatement pstmt = null;
         String sql = "insert into clientes values(?)";
-        
+
         try {
             connection = Oracle.getConnection();
             pstmt = connection.prepareStatement(sql);
             pstmt.setObject(1, c);
             pstmt.executeQuery();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             Oracle.close(pstmt);
             Oracle.close(connection);
         }
@@ -53,14 +53,14 @@ public class ClienteDAO {
             pstmt.setObject(1, c);
             pstmt.setObject(2, c.getCodigo());
             pstmt.executeQuery();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             Oracle.close(pstmt);
             Oracle.close(connection);
         }
     }
-    
+
     public void excluir(int codigo) throws SQLException {
         Connection connection = null;
         PreparedStatement pstmt = null;
@@ -72,7 +72,29 @@ public class ClienteDAO {
             pstmt.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
+            Oracle.close(pstmt);
+            Oracle.close(connection);
+        }
+    }
+
+    public Cliente getClientePorCodigo(int codigo) throws SQLException {
+        Connection connection = null;
+        PreparedStatement pstmt = null;
+        try {
+            connection = Oracle.getConnection();
+            Map<String, Class<?>> map = connection.getTypeMap();
+            map.put("CLIENTE", Cliente.class);
+            map.put("ENDERECO", Endereco.class);
+            map.put("TELEFONE", Telefone.class);
+            String sql = "SELECT VALUE(c) FROM clientes c WHERE c.codigo = ?";
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1, codigo);
+            OracleResultSet rs = (OracleResultSet) pstmt.executeQuery();
+            rs.next();
+            Cliente cliente = (Cliente) rs.getObject(1);
+            return cliente;
+        } finally {
             Oracle.close(pstmt);
             Oracle.close(connection);
         }
@@ -101,7 +123,7 @@ public class ClienteDAO {
             rs.close();
 
             return clientes;
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             return null;
         } finally {
