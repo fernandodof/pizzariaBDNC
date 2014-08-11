@@ -18,7 +18,7 @@ import java.sql.SQLOutput;
 public class Produto implements SQLData{
     private int codigo;
     private String nome;
-    private double preco;
+    private float preco;
 
     public Produto() {
     }
@@ -39,14 +39,13 @@ public class Produto implements SQLData{
         this.nome = nome;
     }
 
-    public double getPreco() {
+    public float getPreco() {
         return preco;
     }
 
-    public void setPreco(double preco) {
+    public void setPreco(float preco) {
         this.preco = preco;
     }
-    
     @Override
     public String getSQLTypeName() throws SQLException {
         return this.getClass().getSimpleName().toUpperCase();
@@ -56,14 +55,14 @@ public class Produto implements SQLData{
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
         this.setCodigo(stream.readInt());
         this.setNome(stream.readString());
-        this.setPreco(stream.readDouble());
+        this.setPreco(stream.readFloat());
     }
 
     @Override
     public void writeSQL(SQLOutput stream) throws SQLException {
        stream.writeInt(this.getCodigo());
        stream.writeString(this.getNome());
-       stream.writeDouble(this.getPreco());
+       stream.writeFloat(this.getPreco());
     }
     
 }

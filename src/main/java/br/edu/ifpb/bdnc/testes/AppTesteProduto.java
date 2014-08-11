@@ -23,10 +23,10 @@ public class AppTesteProduto {
         ProdutoDAO pdb = new ProdutoDAO();
         Produto p = new Produto();
         
-        p.setNome("Sprite Zero 1l");
-        p.setPreco(5.5);
+        p.setNome("Sprite 1l");
+        p.setPreco(5.5f);
         try {
-            pdb.persistir(p);
+            //pdb.persistir(p);
             List<Produto> produtos = pdb.listarTodos();
             for (Produto ps : produtos) {
                 System.out.println("Produtos: " + ps);
