@@ -8,9 +8,7 @@ package br.edu.ifpb.bdnc.dao;
 
 import br.edu.ifpb.bdnc.banco.Oracle;
 import br.edu.ifpb.bdnc.beans.Cliente;
-import br.edu.ifpb.bdnc.beans.Endereco;
-import br.edu.ifpb.bdnc.beans.Produto;
-import br.edu.ifpb.bdnc.beans.Telefone;
+import br.edu.ifpb.bdnc.beans.Ingrediente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,17 +21,18 @@ import java.util.Map;
  *
  * @author magdiel-bruno
  */
-public class ProdutoDAO {
-    public void persistir(Produto p) throws SQLException {
+public class IngredienteDAO {
+    
+    public void persistir(Ingrediente i) throws SQLException {
 
         Connection connection = null;
         PreparedStatement pstmt = null;
-        String sql = "insert into clientes values(?)";
+        String sql = "insert into ingredientes values(?)";
 
         try {
             connection = Oracle.getConnection();
             pstmt = connection.prepareStatement(sql);
-            pstmt.setObject(1, p);
+            pstmt.setObject(1, i);
             pstmt.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -43,15 +42,15 @@ public class ProdutoDAO {
         }
     }
 
-    public void atualizar(Produto p) throws SQLException {
+    public void atualizar(Ingrediente i) throws SQLException {
         Connection connection = null;
         PreparedStatement pstmt = null;
-        String sql = "update produtos p set value(p) = ? where p.codigo = ?";
+        String sql = "update ingredientes i set value(i) = ? where i.codigo = ?";
         try {
             connection = Oracle.getConnection();
             pstmt = connection.prepareStatement(sql);
-            pstmt.setObject(1, p);
-            pstmt.setObject(2, p.getCodigo());
+            pstmt.setObject(1, i);
+            pstmt.setObject(2, i.getCodigo());
             pstmt.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -64,7 +63,7 @@ public class ProdutoDAO {
     public void excluir(int codigo) throws SQLException {
         Connection connection = null;
         PreparedStatement pstmt = null;
-        String sql = "delete produtos p where p.codigo = ?";
+        String sql = "delete ingredientes i where i.codigo = ?";
         try {
             connection = Oracle.getConnection();
             pstmt = connection.prepareStatement(sql);
@@ -78,16 +77,16 @@ public class ProdutoDAO {
         }
     }
 
-    public List<Produto> listarTodos() throws SQLException {
-        List<Produto> produtos = new ArrayList<>();
+    public List<Ingrediente> listarTodos() throws SQLException {
+        List<Ingrediente> ingredientes = new ArrayList<>();
 
         Connection connection = null;
         PreparedStatement stmt = null;
-        String sql = "select value(p) from produtos p order by p.nome";
+        String sql = "select value(i) from ingredientes i order by i.nome";
         try {
             connection = Oracle.getConnection();
             Map<String, Class<?>> map = connection.getTypeMap();
-            map.put("PRODUTO", Produto.class);
+            map.put("INGREDIENTES", Cliente.class);
 //            map.put("ENDERECO", Endereco.class);
 //            map.put("TELEFONE_CLIENTE", Telefone.class);
 
@@ -95,44 +94,12 @@ public class ProdutoDAO {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Produto produto = (Produto) rs.getObject(1);
-                produtos.add(produto);
+                Ingrediente ingre = (Ingrediente) rs.getObject(1);
+                ingredientes.add(ingre);
             }
             rs.close();
 
-            return produtos;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            Oracle.close(stmt);
-            Oracle.close(connection);
-        }
-    }
-    
-    public List<Produto> listarTodasBebidas() throws SQLException {
-        List<Produto> produtos = new ArrayList<>();
-
-        Connection connection = null;
-        PreparedStatement stmt = null;
-        String sql = "select * from produtos p where value(p) is of (only produto) order by p.nome";
-        try {
-            connection = Oracle.getConnection();
-            Map<String, Class<?>> map = connection.getTypeMap();
-            map.put("PRODUTO", Produto.class);
-//            map.put("ENDERECO", Endereco.class);
-//            map.put("TELEFONE_CLIENTE", Telefone.class);
-
-            stmt = connection.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Produto produto = (Produto) rs.getObject(1);
-                produtos.add(produto);
-            }
-            rs.close();
-
-            return produtos;
+            return ingredientes;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
