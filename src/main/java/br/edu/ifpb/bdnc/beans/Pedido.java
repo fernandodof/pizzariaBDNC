@@ -21,7 +21,7 @@ public class Pedido implements SQLData{
     private int codigo;
     private Date data;
     private Cliente cli;
-    private List itens = new ArrayList();
+    private List<ItemPedido> itens = new ArrayList();
 
     public Pedido() {
     }
@@ -72,7 +72,7 @@ public class Pedido implements SQLData{
         if(array != null){
             Object[] result = (Object[]) array.getArray();
             for(Object objeto: result){
-                this.itens.add(objeto);
+                this.itens.add((ItemPedido)objeto);
             }
         }
         

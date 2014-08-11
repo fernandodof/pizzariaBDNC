@@ -42,7 +42,7 @@ INSERT INTO clientes VALUES (cliente(null,'Cliente 1', endereco('rua 1','bairro 
 CREATE OR REPLACE TYPE produto AS OBJECT(
 	codigo int,
 	nome VARCHAR(100),
-	preco DOUBLE PRECISION
+	preco NUMBER
 )not final;
 
 --criando tipo pizza que herda de produto
@@ -86,7 +86,7 @@ CREATE OR REPLACE TYPE itemPedido AS OBJECT(
 	codigo int,
 	prod REF produto,
 	quantidade int,
-	preco double precision
+	preco NUMBER
 );
 
 --criando lista dinamica para pedidos
