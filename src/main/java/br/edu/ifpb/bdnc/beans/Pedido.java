@@ -82,7 +82,11 @@ public class Pedido implements SQLData{
     public void writeSQL(SQLOutput stream) throws SQLException {
         stream.writeInt(this.getCodigo());
         stream.writeDate((java.sql.Date) this.getData());
-        stream.writeObject(this.cli);
+        try {
+            DBUtils.setupRef(stream, cli, "CLIENTES", "CLI");
+        } catch (Exception ex) {
+            Logger.getLogger(Pedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
         try {
             DBUtils.setupArrays(stream, "ITENS", itens);
         } catch (Exception ex) {
