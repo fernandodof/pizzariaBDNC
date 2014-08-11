@@ -22,13 +22,13 @@ import java.util.logging.Logger;
  * @author magdiel-bruno
  */
 public class Pizza extends Produto implements SQLData{
-    private List<Ingrediente> ingredientes = new ArrayList<>();
+    private String ingredientes;
 
-    public List<Ingrediente> getIngredientes() {
+    public String getIngredientes() {
         return ingredientes;
     }
 
-    public void setIngredientes(List<Ingrediente> ingredientes) {
+    public void setIngredientes(String ingredientes) {
         this.ingredientes = ingredientes;
     }
     
@@ -39,21 +39,11 @@ public class Pizza extends Produto implements SQLData{
 
     @Override
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
-        Array array = stream.readArray();
-        if (array != null) {
-            Object[] result = (Object[]) array.getArray();
-            for (Object obj : result) {
-                ingredientes.add((Ingrediente) obj);
-            }
-        }
+        this.setIngredientes(stream.readString());
     }
 
     @Override
     public void writeSQL(SQLOutput stream) throws SQLException {
-        try {
-            DBUtils.setupArrays(stream, "INGREDIENTES", ingredientes);
-        } catch (Exception ex) {
-            Logger.getLogger(Pizza.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        stream.writeString(this.getIngredientes());
     }
 }
