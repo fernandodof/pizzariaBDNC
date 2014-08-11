@@ -26,19 +26,19 @@ public class AppTesteCliente {
 
         //endereço
         Endereco e = new Endereco();
-        e.setBairro("Centro 5");
-        e.setCep("84348-222");
-        e.setNumero("224");
-        e.setRua("Harry Potter");
+        e.setBairro("Centro 7");
+        e.setCep("84348-287");
+        e.setNumero("256");
+        e.setRua("Thomas Edson");
 
         //telefone
         Telefone t = new Telefone();
         t.setDdd(83);
-        t.setNumero("22432-0909");
+        t.setNumero("22432-0923");
 
         //Cliente
         Cliente c = new Cliente();
-        c.setNome("Ronaldo");
+        c.setNome("Fernando");
         c.setEndereco(e);
         c.setTelefone(t);
         
@@ -48,11 +48,11 @@ public class AppTesteCliente {
             //cdb.persistir(c);
             
             //Atualizando
-            //c.setCodigo(5);
+            //c.setCodigo(21);
             //cdb.atualizar(c);
             
             //Deletando
-            //cdb.excluir(3);
+            cdb.excluir(4);
             
             //Listando
             List<Cliente> clientes = cdb.listarTodos();

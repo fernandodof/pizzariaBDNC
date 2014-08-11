@@ -28,7 +28,7 @@ public class ProdutoDAO {
 
         Connection connection = null;
         PreparedStatement pstmt = null;
-        String sql = "insert into clientes values(?)";
+        String sql = "insert into produtos values(?)";
 
         try {
             connection = Oracle.getConnection();
@@ -83,7 +83,7 @@ public class ProdutoDAO {
 
         Connection connection = null;
         PreparedStatement stmt = null;
-        String sql = "select value(p) from produtos p order by p.nome";
+        String sql = "select * from produtos p order by p.nome";
         try {
             connection = Oracle.getConnection();
             Map<String, Class<?>> map = connection.getTypeMap();
