@@ -67,7 +67,11 @@ public class Pedido implements SQLData{
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
         this.setCodigo(stream.readInt());
         this.setData(stream.readDate());
-        this.setCli((Cliente) stream.readObject());
+        try {
+            this.setCli((Cliente) DBUtils.getRef(stream));
+        } catch (Exception ex) {
+            Logger.getLogger(Pedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Array array = stream.readArray();
         if(array != null){
             Object[] result = (Object[]) array.getArray();
@@ -83,12 +87,8 @@ public class Pedido implements SQLData{
         stream.writeInt(this.getCodigo());
         stream.writeDate((java.sql.Date) this.getData());
         try {
-            DBUtils.setupRef(stream, cli, "CLIENTES", "CLI");
-        } catch (Exception ex) {
-            Logger.getLogger(Pedido.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            DBUtils.setupArrays(stream, "ITENS", itens);
+            DBUtils.setupRef(stream, cli, "CLIENTES", "codigo");
+            DBUtils.setupArrays(stream, "ITENSPEDIDO", itens);
         } catch (Exception ex) {
             Logger.getLogger(Pedido.class.getName()).log(Level.SEVERE, null, ex);
         }

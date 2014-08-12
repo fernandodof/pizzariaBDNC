@@ -46,6 +46,7 @@ public class Produto implements SQLData{
     public void setPreco(float preco) {
         this.preco = preco;
     }
+    
     @Override
     public String getSQLTypeName() throws SQLException {
         return this.getClass().getSimpleName().toUpperCase();

@@ -86,8 +86,8 @@ public class ClienteDAO {
             Map<String, Class<?>> map = connection.getTypeMap();
             map.put("CLIENTE", Cliente.class);
             map.put("ENDERECO", Endereco.class);
-            map.put("TELEFONE", Telefone.class);
-            String sql = "SELECT VALUE(c) FROM clientes c WHERE c.codigo = ?";
+            map.put("TELEFONE_CLIENTE", Telefone.class);
+            String sql = "SELECT value(c) FROM clientes c WHERE c.codigo = ?";
             pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, codigo);
             OracleResultSet rs = (OracleResultSet) pstmt.executeQuery();

@@ -8,7 +8,12 @@ package br.edu.ifpb.bdnc.dao;
 
 import br.edu.ifpb.bdnc.banco.Oracle;
 import br.edu.ifpb.bdnc.beans.Cliente;
+import br.edu.ifpb.bdnc.beans.Endereco;
+import br.edu.ifpb.bdnc.beans.ItemPedido;
 import br.edu.ifpb.bdnc.beans.Pedido;
+import br.edu.ifpb.bdnc.beans.Pizza;
+import br.edu.ifpb.bdnc.beans.Produto;
+import br.edu.ifpb.bdnc.beans.Telefone;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -62,7 +67,7 @@ public class PedidoDAO {
     public void excluir(int codigo) throws SQLException {
         Connection connection = null;
         PreparedStatement pstmt = null;
-        String sql = "DELETE PEDIDOS p WHERE p.codigo = ?";
+        String sql = "DELETE FROM PEDIDOS p WHERE p.codigo = ?";
         try {
             connection = Oracle.getConnection();
             pstmt = connection.prepareStatement(sql);
@@ -81,12 +86,17 @@ public class PedidoDAO {
 
         Connection connection = null;
         PreparedStatement stmt = null;
-        String sql = "select value(p) from produtos p order by p.nome";
+        String sql = "SELECT VALUE(p) from pedidos p ORDER BY P.dataPedido";
         try {
             connection = Oracle.getConnection();
             Map<String, Class<?>> map = connection.getTypeMap();
-            map.put("CLIENTE", Cliente.class);
             map.put("PEDIDO", Pedido.class);
+            map.put("CLIENTE", Cliente.class);
+            map.put("PRODUTO", Produto.class);
+            map.put("PIZZA", Pizza.class);
+            map.put("ENDERECO", Endereco.class);
+            map.put("TELEFONE_CLIENTE", Telefone.class);
+            map.put("ITEMPEDIDO", ItemPedido.class);
             stmt = connection.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 

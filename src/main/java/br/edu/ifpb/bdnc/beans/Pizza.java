@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package br.edu.ifpb.bdnc.beans;
 
 import br.edu.ifpb.bdnc.banco.DBUtils;
@@ -21,7 +20,8 @@ import java.util.logging.Logger;
  *
  * @author magdiel-bruno
  */
-public class Pizza extends Produto implements SQLData{
+public class Pizza extends Produto implements SQLData {
+
     private String ingredientes;
 
     public String getIngredientes() {
@@ -31,7 +31,7 @@ public class Pizza extends Produto implements SQLData{
     public void setIngredientes(String ingredientes) {
         this.ingredientes = ingredientes;
     }
-    
+
     @Override
     public String getSQLTypeName() throws SQLException {
         return "PIZZA";
@@ -39,11 +39,17 @@ public class Pizza extends Produto implements SQLData{
 
     @Override
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
+        this.setCodigo(stream.readInt());
+        this.setNome(stream.readString());
+        this.setPreco(stream.readFloat());
         this.setIngredientes(stream.readString());
     }
 
     @Override
     public void writeSQL(SQLOutput stream) throws SQLException {
+        stream.writeInt(this.getCodigo());
+        stream.writeString(this.getNome());
+        stream.writeFloat(this.getPreco());
         stream.writeString(this.getIngredientes());
     }
 }

@@ -5,10 +5,13 @@
  */
 package br.edu.ifpb.bdnc.beans;
 
+import br.edu.ifpb.bdnc.banco.DBUtils;
 import java.sql.SQLData;
 import java.sql.SQLException;
 import java.sql.SQLInput;
 import java.sql.SQLOutput;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -64,7 +67,11 @@ public class ItemPedido implements SQLData {
     @Override
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
         this.setCodigo(stream.readInt());
-        this.setProd((Produto) stream.readObject());
+        try {
+            this.setProd((Produto) DBUtils.getRef(stream));
+        } catch (Exception ex) {
+            Logger.getLogger(ItemPedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setQuantidade(stream.readInt());
         this.setPreco(stream.readDouble());
     }
@@ -72,7 +79,11 @@ public class ItemPedido implements SQLData {
     @Override
     public void writeSQL(SQLOutput stream) throws SQLException {
         stream.writeInt(this.getCodigo());
-        stream.writeObject(this.getProd());
+        try {
+            DBUtils.setupRef(stream, prod, "PRODUTOS", "codigo");
+        } catch (Exception ex) {
+            Logger.getLogger(ItemPedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
         stream.writeInt(this.getQuantidade());
         stream.writeDouble(this.getPreco());
     }

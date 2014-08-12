@@ -14,6 +14,7 @@ import java.lang.reflect.Method;
 import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.sql.Ref;
+import java.sql.SQLInput;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -114,5 +115,10 @@ public class DBUtils {
 
         return sb.length() > 0 ? sb.substring(0, sb.length() - 1) : sb
                 .toString();
+    }
+    
+    public static Object getRef(SQLInput stream) throws Exception{
+        Object object = stream.readRef();
+        return ((oracle.sql.REF)object).getValue();
     }
 }

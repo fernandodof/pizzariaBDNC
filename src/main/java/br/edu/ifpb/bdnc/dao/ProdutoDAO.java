@@ -7,10 +7,9 @@
 package br.edu.ifpb.bdnc.dao;
 
 import br.edu.ifpb.bdnc.banco.Oracle;
-import br.edu.ifpb.bdnc.beans.Cliente;
 import br.edu.ifpb.bdnc.beans.Endereco;
+import br.edu.ifpb.bdnc.beans.Pizza;
 import br.edu.ifpb.bdnc.beans.Produto;
-import br.edu.ifpb.bdnc.beans.Telefone;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -79,17 +78,16 @@ public class ProdutoDAO {
     }
 
     public List<Produto> listarTodos() throws SQLException {
-        List<Produto> produtos = new ArrayList<>();
+        List<Produto> produtos = new ArrayList();
 
         Connection connection = null;
         PreparedStatement stmt = null;
-        String sql = "select value(p) from produtos p where value(p) is of (produto)";
+        String sql = "select VALUE(p) from produtos p WHERE VALUE(p) IS OF (produto) ORDER BY p.nome";
         try {
             connection = Oracle.getConnection();
             Map<String, Class<?>> map = connection.getTypeMap();
             map.put("PRODUTO", Produto.class);
-//            map.put("ENDERECO", Endereco.class);
-//            map.put("TELEFONE_CLIENTE", Telefone.class);
+            map.put("PIZZA", Pizza.class);
 
             stmt = connection.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
@@ -143,16 +141,14 @@ public class ProdutoDAO {
     }
     
      public Produto listarProdutoPorCodigo(int codigo) throws SQLException {
-
         Connection connection = null;
         PreparedStatement stmt = null;
-        String sql = "select value(p) from produtos p where p.codigo=?";
+        String sql = "SELECT VALUE(p) FROM produtos p WHERE p.codigo = ?";
         try {
             connection = Oracle.getConnection();
             Map<String, Class<?>> map = connection.getTypeMap();
             map.put("PRODUTO", Produto.class);
-//            map.put("ENDERECO", Endereco.class);
-//            map.put("TELEFONE_CLIENTE", Telefone.class);
+            map.put("PIZZA", Endereco.class);
 
             stmt = connection.prepareStatement(sql);
             stmt.setInt(1, codigo);

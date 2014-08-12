@@ -62,7 +62,7 @@ public class Cliente implements SQLData{
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
         this.setCodigo(stream.readInt());
         this.setNome(stream.readString());
-        this.setEndereco((Endereco)stream.readObject());
+        this.setEndereco((Endereco) stream.readObject());
         this.setTelefone((Telefone) stream.readObject());
     }
 
