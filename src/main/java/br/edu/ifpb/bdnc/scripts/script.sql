@@ -34,10 +34,7 @@ FOR EACH ROW
      SELECT cliente_seq.NEXTVAL INTO :new.codigo FROM dual;
    END;
 
---Inserindo cliente (null para codigo, que será gerado pela sequencia+gatilho)
-INSERT INTO clientes VALUES (cliente(null,'Cliente 1', endereco('rua 1','bairro 1','numero 1','cep 1'),Telefone_cliente(83,'1234-5678')));   
 
------------
 --criando tipo produto
 CREATE OR REPLACE TYPE produto AS OBJECT(
 	codigo int,
@@ -64,24 +61,7 @@ FOR EACH ROW
      SELECT produto_seq.NEXTVAL INTO :new.codigo FROM dual;
    END;
 
---Inserindo produtos
-INSERT INTO produtos VALUES (produto(null,'Coca-Cola 2l',4.50));
-INSERT INTO produtos VALUES (produto(null,'Fanta 1l',3.00));
-
---Inserindo pizzas
-INSERT INTO produtos VALUES (pizza(null,'Portuguesa Média',30,'Cebola ,Ovo, Presunto e Mussarela'));
-INSERT INTO produtos VALUES (pizza(null,'Calabresa Grande',40,'Calabresa, Presunto, Mussarela, Tomate'));
-
---Recuperando todos os produtos
-SELECT * FROM PRODUTOS
-
---Recuperando apenas pizzas
-SELECT p.codigo, p.nome, p.preco, TREAT(VALUE(p) AS pizza).ingredientes ingredientes
-FROM produtos p WHERE VALUE(p) IS OF (ONLY pizza);
-
-
-------------   
---criando tipo itemPedido   
+--criando tipo itemPedido
 CREATE OR REPLACE TYPE itemPedido AS OBJECT(
 	codigo int,
 	prod REF produto,
@@ -93,33 +73,28 @@ CREATE OR REPLACE TYPE itemPedido AS OBJECT(
 CREATE OR REPLACE TYPE itensPedido AS TABLE OF itemPedido;
 ------------
 
---criando tipo pedido 
+--criando tipo pedido
 CREATE OR REPLACE TYPE pedido AS OBJECT(
-	codigo int,
+	codigo INT,
 	dataPedido date,
 	cli REF cliente,
 	itens itensPedido
 );
 
 --Criando tabela para pedidos
-CREATE TABLE pedidos OF pedido NESTED TABLE itens STORE as itens_pd;
+CREATE TABLE pedidos OF pedido (
+  codigo PRIMARY KEY,
+  dataPedido NOT NULL,
+  cli WITH ROWID REFERENCES clientes
+) NESTED TABLE itens STORE as itens_pd;
 
 --criando squencia para pedido
 CREATE SEQUENCE pedido_seq START WITH 1 INCREMENT BY 1 nomaxvalue; 
 
 ---criando gatilho para o codigo do pedido
-CREATE TRIGGER pedido_trigger
+CREATE OR REPLACE TRIGGER pedido_trigger
 BEFORE INSERT ON pedidos
 FOR EACH ROW
    BEGIN
      SELECT pedido_seq.NEXTVAL INTO :new.codigo FROM dual;
    END;
-   
---inserindo pedidos
-
-INSERT INTO pedidos VALUES (null,to_date(sysdate,'DD/MM/YYYY'), (SELECT REF(c) FROM clientes c WHERE c.codigo = 1), 
-itensPedido(itemPedido(null,(SELECT REF(p) FROM produtos p WHERE p.codigo = 1), 1, 4.50),
-            itemPedido(null,(SELECT REF(p) FROM produtos p WHERE p.codigo = 4), 1, 40))); 
-
---Recuperando produtos
-SELECT p.codigo, p.dataPedido, p.cli.nome, i.prod.nome FROM pedidos p, table (p.itens) i

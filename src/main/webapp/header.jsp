@@ -15,6 +15,7 @@
         <link href= "../bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href= "bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href= "css/header.css" rel="stylesheet">
+        <link href= "css/styles.css" rel="stylesheet">
         <script src="bootstrap/js/jquery.min.js"></script>
         <script src="bootstrap/js/bootstrap.min.js"></script>
     </head>
@@ -30,8 +31,9 @@
                 <div class="collapse navbar-collapse custonNavHeaderCollapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="index.jsp">Home</a></li>
-                        <li><a href="#">Produto</a></li>
-                        <li><a href="#">Cliente</a></li>
+                        <li><a href="produto.jsp">Produtos</a></li>
+                        <li><a href="#">Pedidos</a></li>
+                        <li><a href="cliente.jsp">Clientes</a></li>
                         <li><a href="#">Sobre</a></li>
                     </ul>
                 </div>

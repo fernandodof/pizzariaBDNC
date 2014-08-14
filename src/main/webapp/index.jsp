@@ -14,7 +14,7 @@
     <body>
         <div class="container">
             <div class="jumbotron"><h2>Pizzaria BDNC</h2></div>
-            <img src="imgs/product1.png" class="img img-responsive">
+            <img src="imgs/product.png" class="img-responsive">
         </div>
     </body>
 </html>

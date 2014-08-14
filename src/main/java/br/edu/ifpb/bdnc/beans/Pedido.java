@@ -69,7 +69,10 @@ public class Pedido implements SQLData{
         this.setData(stream.readDate());
         try {
             this.setCli((Cliente) DBUtils.getRef(stream));
-        } catch (Exception ex) {
+        }catch(NullPointerException ex){
+            this.setCli(null);
+        } 
+        catch (Exception ex) {
             Logger.getLogger(Pedido.class.getName()).log(Level.SEVERE, null, ex);
         }
         Array array = stream.readArray();

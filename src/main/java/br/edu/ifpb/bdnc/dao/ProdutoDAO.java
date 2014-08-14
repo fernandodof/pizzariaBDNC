@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package br.edu.ifpb.bdnc.dao;
 
 import br.edu.ifpb.bdnc.banco.Oracle;
@@ -23,8 +22,9 @@ import java.util.Map;
  * @author magdiel-bruno
  */
 public class ProdutoDAO {
-    public void persistir(Produto p) throws SQLException {
 
+    public boolean persistir(Produto p) throws SQLException {
+        boolean resultado = false;
         Connection connection = null;
         PreparedStatement pstmt = null;
         String sql = "insert into produtos values(?)";
@@ -34,47 +34,60 @@ public class ProdutoDAO {
             pstmt = connection.prepareStatement(sql);
             pstmt.setObject(1, p);
             pstmt.executeQuery();
+            resultado = true;
         } catch (SQLException e) {
             e.printStackTrace();
+            resultado = false;
         } finally {
             Oracle.close(pstmt);
             Oracle.close(connection);
         }
+        return false;
     }
 
-    public void atualizar(Produto p) throws SQLException {
+    public boolean atualizar(Produto p) throws SQLException {
         Connection connection = null;
         PreparedStatement pstmt = null;
         String sql = "update produtos p set value(p) = ? where p.codigo = ?";
+        boolean resultado = false;
         try {
             connection = Oracle.getConnection();
             pstmt = connection.prepareStatement(sql);
             pstmt.setObject(1, p);
             pstmt.setObject(2, p.getCodigo());
-            pstmt.executeQuery();
+            pstmt.executeUpdate();
+            resultado = true;
         } catch (SQLException e) {
             e.printStackTrace();
+            resultado = false;
         } finally {
             Oracle.close(pstmt);
             Oracle.close(connection);
         }
+        return resultado;
     }
 
-    public void excluir(int codigo) throws SQLException {
+    public boolean excluir(int codigo) throws SQLException {
         Connection connection = null;
         PreparedStatement pstmt = null;
         String sql = "delete produtos p where p.codigo = ?";
+        boolean resultado = false;
         try {
             connection = Oracle.getConnection();
             pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, codigo);
-            pstmt.executeQuery();
+            int linhasAfetadas = pstmt.executeUpdate();
+            if (linhasAfetadas > 0) {
+                resultado = true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
+            resultado = false;
         } finally {
             Oracle.close(pstmt);
             Oracle.close(connection);
         }
+        return resultado;
     }
 
     public List<Produto> listarTodos() throws SQLException {
@@ -82,7 +95,7 @@ public class ProdutoDAO {
 
         Connection connection = null;
         PreparedStatement stmt = null;
-        String sql = "select VALUE(p) from produtos p WHERE VALUE(p) IS OF (produto) ORDER BY p.nome";
+        String sql = "SELECT VALUE(p) from produtos p ORDER BY p.nome";
         try {
             connection = Oracle.getConnection();
             Map<String, Class<?>> map = connection.getTypeMap();
@@ -107,7 +120,7 @@ public class ProdutoDAO {
             Oracle.close(connection);
         }
     }
-    
+
     public List<Produto> listarTodasBebidas() throws SQLException {
         List<Produto> produtos = new ArrayList<>();
 
@@ -139,8 +152,8 @@ public class ProdutoDAO {
             Oracle.close(connection);
         }
     }
-    
-     public Produto listarProdutoPorCodigo(int codigo) throws SQLException {
+
+    public Produto listarProdutoPorCodigo(int codigo) throws SQLException {
         Connection connection = null;
         PreparedStatement stmt = null;
         String sql = "SELECT VALUE(p) FROM produtos p WHERE p.codigo = ?";
@@ -148,7 +161,7 @@ public class ProdutoDAO {
             connection = Oracle.getConnection();
             Map<String, Class<?>> map = connection.getTypeMap();
             map.put("PRODUTO", Produto.class);
-            map.put("PIZZA", Endereco.class);
+            map.put("PIZZA", Pizza.class);
 
             stmt = connection.prepareStatement(sql);
             stmt.setInt(1, codigo);
@@ -156,7 +169,7 @@ public class ProdutoDAO {
 
             rs.next();
             Produto produto = (Produto) rs.getObject(1);
-            
+
             rs.close();
 
             return produto;
