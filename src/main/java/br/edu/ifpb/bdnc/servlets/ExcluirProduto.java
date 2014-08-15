@@ -36,8 +36,12 @@ public class ExcluirProduto extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ProdutoDAO produtoDAO = new ProdutoDAO();
         try {
-            if (produtoDAO.excluir(Integer.parseInt(request.getParameter("codigo")))) {
-                request.setAttribute("produtoExcluido", true);
+            if (produtoDAO.verificaVendido(Integer.parseInt(request.getParameter("codigo")))) {
+                if (produtoDAO.excluir(Integer.parseInt(request.getParameter("codigo")))) {
+                    request.setAttribute("produtoExcluido", true);
+                } else {
+                    request.setAttribute("produtoExcluido", false);
+                }
             } else {
                 request.setAttribute("produtoExcluido", false);
             }

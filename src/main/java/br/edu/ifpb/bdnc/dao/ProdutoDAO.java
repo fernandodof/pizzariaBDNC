@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -180,5 +181,29 @@ public class ProdutoDAO {
             Oracle.close(stmt);
             Oracle.close(connection);
         }
+    }
+
+    public boolean verificaVendido(int codigo) throws SQLException {
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        String sql = "SELECT COUNT(i.prod.codigo) qtde FROM pedidos p, table (p.itens) i WHERE i.prod.codigo = ?";
+        boolean resultado = false;
+        try {
+            connection = Oracle.getConnection();
+            stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, codigo);
+            ResultSet resultSet = stmt.executeQuery();
+            resultSet.next();
+            System.out.println(resultSet.getInt(1));
+            if (resultSet.getInt(1)>0) {
+                resultado = true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Oracle.close(connection);
+        }
+        return resultado;
     }
 }
