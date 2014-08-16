@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +62,7 @@ public class ClienteDAO {
         }
     }
 
-    public void excluir(int codigo) throws SQLException {
+    public void excluir(int codigo) throws SQLException{
         Connection connection = null;
         PreparedStatement pstmt = null;
         String sql = "delete clientes c where c.codigo = ?";
@@ -72,6 +73,7 @@ public class ClienteDAO {
             pstmt.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SQLIntegrityConstraintViolationException();
         } finally {
             Oracle.close(pstmt);
             Oracle.close(connection);
@@ -91,8 +93,10 @@ public class ClienteDAO {
             pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, codigo);
             OracleResultSet rs = (OracleResultSet) pstmt.executeQuery();
-            rs.next();
-            Cliente cliente = (Cliente) rs.getObject(1);
+            Cliente cliente = null;
+            while (rs.next()) {
+                cliente = (Cliente) rs.getObject(1);
+            }
             return cliente;
         } finally {
             Oracle.close(pstmt);

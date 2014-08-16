@@ -5,13 +5,11 @@
  */
 package br.edu.ifpb.bdnc.servlets;
 
-import br.edu.ifpb.bdnc.beans.Cliente;
-import br.edu.ifpb.bdnc.beans.Endereco;
-import br.edu.ifpb.bdnc.beans.Telefone;
 import br.edu.ifpb.bdnc.dao.ClienteDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -24,41 +22,31 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Fernando
  */
-@WebServlet(name = "CadastrarCliente", urlPatterns = {"/CadastrarCliente"})
-public class CadastrarCliente extends HttpServlet {
+@WebServlet(name = "ExcluirCliente", urlPatterns = {"/ExcluirCliente"})
+public class ExcluirCliente extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        Cliente cliente = new Cliente();
-        cliente.setNome(request.getParameter("nome"));
-        //telefone
-        Telefone telefone = new Telefone();
-        telefone.setDdd(Integer.parseInt(request.getParameter("ddd")));
-        telefone.setNumero(request.getParameter("numeroDoTelefone"));
-        cliente.setTelefone(telefone);
-        //endereco
-        Endereco endereco = new Endereco();
-        endereco.setRua(request.getParameter("rua"));
-        endereco.setBairro(request.getParameter("bairro"));
-        endereco.setNumero(request.getParameter("numero"));
-        endereco.setCep(request.getParameter("cep"));
-        cliente.setEndereco(endereco);
-
         ClienteDAO clienteDAO = new ClienteDAO();
         try {
-            if (request.getParameter("botao") != null && request.getParameter("botao").equals("cadastrar")) {
-                clienteDAO.persistir(cliente);
-            }else{
-                cliente.setCodigo(Integer.parseInt(request.getParameter("codigo")));
-                clienteDAO.atualizar(cliente);
-            }
-            request.setAttribute("sucesso", true);
-            request.getRequestDispatcher("controlarCliente.jsp").forward(request, response);
+            clienteDAO.excluir(Integer.parseInt(request.getParameter("codigo")));
+            request.setAttribute("clienteExcluido", true);
+            request.getRequestDispatcher("cliente.jsp").forward(request, response);
+        } catch (SQLIntegrityConstraintViolationException ex) {
+            request.setAttribute("clienteExcluido", false);
+            request.getRequestDispatcher("cliente.jsp").forward(request, response);
         } catch (SQLException ex) {
-            request.setAttribute("sucesso", false);
-            request.getRequestDispatcher("controlarCliente.jsp").forward(request, response);
+            request.setAttribute("clienteExcluido", false);
+            request.getRequestDispatcher("cliente.jsp").forward(request, response);
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

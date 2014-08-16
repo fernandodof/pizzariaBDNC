@@ -54,6 +54,7 @@
                     <th>Numero</th>
                     <th>CEP</th>
                     <th>Telefone</th>
+                    <th>Editar/Excluir</th>
                 </tr>
             </thead>
             <tbody>
@@ -65,11 +66,36 @@
                         <td>${cliente.endereco.numero}</td>
                         <td>${cliente.endereco.cep}</td>
                         <td>(${cliente.telefone.ddd}) ${cliente.telefone.numero}</td>
+                        <td>
+
+                            <a href="controlarCliente.jsp?cod=${cliente.codigo}" class="btn pull-left"><span class="glyphicon glyphicon-edit"></span></a>
+                            <form id="excluir" method="POST" action="ExcluirCliente">
+                                <button type="submit" name="codigo" value="${cliente.codigo}" class="btn"><span class="glyphicon glyphicon-remove"></span></button>
+                            </form>
+
+                        </td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
     </div>
+    <a href="controlarCliente.jsp" class="btn btn-info">Cadastrar Cliente</a>
+
+    <c:choose>
+        <c:when test="${clienteExcluido != null and clienteExcluido == true}">
+            <div class="alert alert-dismissable alert-success" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                Cliente excluído
+            </div>
+        </c:when>
+        <c:when test="${clienteExcluido != null and clienteExcluido == false}">
+            <div class="alert alert-dismissable alert-danger" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                Cliente não pôde ser excluído
+            </div>
+        </c:when>    
+    </c:choose>
+
 </div>
 
 </body>

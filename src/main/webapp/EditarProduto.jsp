@@ -17,12 +17,13 @@
     </head>
     <body>
         <%
-            int cod = Integer.parseInt(request.getParameter("cod"));
-            ProdutoDAO produtoDAO = new ProdutoDAO();
-            Produto produto = produtoDAO.listarProdutoPorCodigo(cod);
+            if (request.getParameter("cod") != null) {
+                int cod = Integer.parseInt(request.getParameter("cod"));
+                ProdutoDAO produtoDAO = new ProdutoDAO();
+                Produto produto = produtoDAO.listarProdutoPorCodigo(cod);
 
-            pageContext.setAttribute("produto", produto);
-
+                pageContext.setAttribute("produto", produto);
+            }
         %>
 
         <div class="container">
