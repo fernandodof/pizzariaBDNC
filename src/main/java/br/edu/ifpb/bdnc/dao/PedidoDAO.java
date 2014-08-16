@@ -82,11 +82,11 @@ public class PedidoDAO {
     }
 
     public List<Pedido> listarTodos() throws SQLException {
-        List<Pedido> pedidos = new ArrayList<>();
+        List<Pedido> pedidos = new ArrayList();
 
         Connection connection = null;
         PreparedStatement stmt = null;
-        String sql = "SELECT VALUE(p) from pedidos p ORDER BY P.dataPedido";
+        String sql = "SELECT VALUE(p) FROM pedidos p ORDER BY P.dataPedido";
         try {
             connection = Oracle.getConnection();
             Map<String, Class<?>> map = connection.getTypeMap();
