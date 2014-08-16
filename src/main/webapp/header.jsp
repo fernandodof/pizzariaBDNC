@@ -32,7 +32,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="index.jsp">Home</a></li>
                         <li><a href="produto.jsp">Produtos</a></li>
-                        <li><a href="#">Pedidos</a></li>
+                        <li><a href="pedidos.jsp">Pedidos</a></li>
                         <li><a href="cliente.jsp">Clientes</a></li>
                         <li><a href="#">Sobre</a></li>
                     </ul>

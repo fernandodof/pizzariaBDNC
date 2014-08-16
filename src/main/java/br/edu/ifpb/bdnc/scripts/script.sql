@@ -6,7 +6,7 @@ CREATE OR REPLACE TYPE endereco AS OBJECT(
 	cep VARCHAR(10)
 );
 
---criando tipo telefone //MBMI
+--criando tipo telefone
 create or replace type telefone_cliente as object(
         ddd number,
         numero varchar(10)
@@ -33,7 +33,6 @@ FOR EACH ROW
    BEGIN
      SELECT cliente_seq.NEXTVAL INTO :new.codigo FROM dual;
    END;
-
 
 --criando tipo produto
 CREATE OR REPLACE TYPE produto AS OBJECT(
@@ -71,7 +70,6 @@ CREATE OR REPLACE TYPE itemPedido AS OBJECT(
 
 --criando lista dinamica para pedidos
 CREATE OR REPLACE TYPE itensPedido AS TABLE OF itemPedido;
-------------
 
 --criando tipo pedido
 CREATE OR REPLACE TYPE pedido AS OBJECT(
@@ -98,3 +96,6 @@ FOR EACH ROW
    BEGIN
      SELECT pedido_seq.NEXTVAL INTO :new.codigo FROM dual;
    END;
+   
+CREATE OR REPLACE VIEW produtos_vendidos AS
+SELECT DISTINCT i.prod.codigo cod FROM pedidos p, table (p.itens) i  
