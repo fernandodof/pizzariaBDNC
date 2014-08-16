@@ -66,6 +66,7 @@
                     </tbody>
                 </table>
             </div>
+            <a href="controlarPedidio.jsp.jsp" class="btn btn-info">Novo pedido</a>
         </div>
     </body>
 </html>
