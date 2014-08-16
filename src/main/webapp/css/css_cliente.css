@@ -8,7 +8,7 @@ and open the template in the editor.
     Author     : magdiel-bruno
 */
 
-
+/*
 #container{
     width: 800px;
     height: 600px;
@@ -64,4 +64,8 @@ and open the template in the editor.
     margin-left: 20%;
     text-align: center;
 }
+*/
 
+#cadastroCliente{
+    margin-top: 20px;
+}

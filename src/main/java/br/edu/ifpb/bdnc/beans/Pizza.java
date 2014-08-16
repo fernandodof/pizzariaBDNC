@@ -5,16 +5,10 @@
  */
 package br.edu.ifpb.bdnc.beans;
 
-import br.edu.ifpb.bdnc.banco.DBUtils;
-import java.sql.Array;
 import java.sql.SQLData;
 import java.sql.SQLException;
 import java.sql.SQLInput;
 import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -39,17 +33,17 @@ public class Pizza extends Produto implements SQLData {
 
     @Override
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
-        this.setCodigo(stream.readInt());
-        this.setNome(stream.readString());
-        this.setPreco(stream.readFloat());
-        this.setIngredientes(stream.readString());
+        super.setCodigo(stream.readInt());
+        super.setNome(stream.readString());
+        super.setPreco(stream.readFloat());
+        setIngredientes(stream.readString());
     }
 
     @Override
     public void writeSQL(SQLOutput stream) throws SQLException {
-        stream.writeInt(this.getCodigo());
-        stream.writeString(this.getNome());
-        stream.writeFloat(this.getPreco());
+        stream.writeInt(super.getCodigo());
+        stream.writeString(super.getNome());
+        stream.writeFloat(super.getPreco());
         stream.writeString(this.getIngredientes());
     }
 }

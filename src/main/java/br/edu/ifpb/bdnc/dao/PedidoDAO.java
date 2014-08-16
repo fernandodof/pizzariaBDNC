@@ -31,7 +31,7 @@ public class PedidoDAO {
 
         Connection connection = null;
         PreparedStatement pstmt = null;
-        String sql = "INSERT INTO pedidos VALUES(?)";
+        String sql = "INSERT INTO PEDIDOS VALUES(?)";
 
         try {
             connection = Oracle.getConnection();

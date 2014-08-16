@@ -17,6 +17,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import oracle.jdbc.OracleResultSet;
 
 /**
  *
@@ -166,11 +167,10 @@ public class ProdutoDAO {
 
             stmt = connection.prepareStatement(sql);
             stmt.setInt(1, codigo);
-            ResultSet rs = stmt.executeQuery();
+            OracleResultSet rs = (OracleResultSet) stmt.executeQuery();
 
             rs.next();
             Produto produto = (Produto) rs.getObject(1);
-
             rs.close();
 
             return produto;
@@ -194,14 +194,15 @@ public class ProdutoDAO {
             stmt.setInt(1, codigo);
             ResultSet resultSet = stmt.executeQuery();
             resultSet.next();
-            System.out.println(resultSet.getInt(1));
-            if (resultSet.getInt(1)>0) {
+            System.out.println(resultSet.getInt("qtde"));
+            if (resultSet.getInt(1) > 0) {
                 resultado = true;
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+            Oracle.close(stmt);
             Oracle.close(connection);
         }
         return resultado;

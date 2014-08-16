@@ -4,7 +4,6 @@ import br.edu.ifpb.bdnc.beans.Pizza;
 import br.edu.ifpb.bdnc.beans.Produto;
 import br.edu.ifpb.bdnc.dao.ProdutoDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

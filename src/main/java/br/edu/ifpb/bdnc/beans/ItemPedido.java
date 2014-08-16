@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  */
 public class ItemPedido implements SQLData {
 
-    private int Codigo;
+    private int codigo;
     private Produto prod;
     private int quantidade;
     private double preco;
@@ -28,11 +28,11 @@ public class ItemPedido implements SQLData {
     }
 
     public int getCodigo() {
-        return Codigo;
+        return codigo;
     }
 
-    public void setCodigo(int Codigo) {
-        this.Codigo = Codigo;
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
     public Produto getProd() {
@@ -68,7 +68,7 @@ public class ItemPedido implements SQLData {
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
         this.setCodigo(stream.readInt());
         try {
-            this.setProd((Produto) DBUtils.getRef(stream));
+            this.setProd((Produto) DBUtils.getRef1(stream));
         } catch (Exception ex) {
             Logger.getLogger(ItemPedido.class.getName()).log(Level.SEVERE, null, ex);
         }

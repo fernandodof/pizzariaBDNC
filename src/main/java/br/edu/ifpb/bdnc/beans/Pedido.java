@@ -68,7 +68,7 @@ public class Pedido implements SQLData{
         this.setCodigo(stream.readInt());
         this.setData(stream.readDate());
         try {
-            this.setCli((Cliente) DBUtils.getRef(stream));
+            this.setCli((Cliente) DBUtils.getRef1(stream));
         }catch(NullPointerException ex){
             this.setCli(null);
         } 
@@ -90,7 +90,11 @@ public class Pedido implements SQLData{
         stream.writeInt(this.getCodigo());
         stream.writeDate((java.sql.Date) this.getData());
         try {
-            DBUtils.setupRef(stream, cli, "CLIENTES", "codigo");
+            if(cli != null) {
+                DBUtils.setupRef(stream, cli, "CLIENTES", "codigo");
+            }else{
+                stream.writeObject(null);
+            }
             DBUtils.setupArrays(stream, "ITENSPEDIDO", itens);
         } catch (Exception ex) {
             Logger.getLogger(Pedido.class.getName()).log(Level.SEVERE, null, ex);
