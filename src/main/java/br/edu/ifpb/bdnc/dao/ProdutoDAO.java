@@ -186,16 +186,15 @@ public class ProdutoDAO {
     public boolean verificaVendido(int codigo) throws SQLException {
         Connection connection = null;
         PreparedStatement stmt = null;
-        String sql = "SELECT COUNT(i.prod.codigo) qtde FROM pedidos p, table (p.itens) i WHERE i.prod.codigo = ?";
+        String sql = "SELECT cod FROM produtos_vendidos WHERE cod = ?";
         boolean resultado = false;
         try {
             connection = Oracle.getConnection();
             stmt = connection.prepareStatement(sql);
             stmt.setInt(1, codigo);
             ResultSet resultSet = stmt.executeQuery();
-            resultSet.next();
-            System.out.println(resultSet.getInt("qtde"));
-            if (resultSet.getInt(1) > 0) {
+
+            if (resultSet.next()){
                 resultado = true;
             }
 
