@@ -65,5 +65,9 @@ public class Produto implements SQLData{
        stream.writeString(this.getNome());
        stream.writeFloat(this.getPreco());
     }
-    
+
+    @Override
+    public String toString() {
+        return "Produto{" + "codigo=" + codigo + ", nome=" + nome + ", preco=" + preco + '}';
+    }
 }

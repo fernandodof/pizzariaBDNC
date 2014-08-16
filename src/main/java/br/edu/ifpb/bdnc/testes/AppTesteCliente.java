@@ -38,7 +38,7 @@ public class AppTesteCliente {
 
         //Cliente
         Cliente c = new Cliente();
-        c.setNome("Fernando");
+        c.setNome("Fernan");
         c.setEndereco(e);
         c.setTelefone(t);
         
@@ -48,11 +48,11 @@ public class AppTesteCliente {
             //cdb.persistir(c);
             
             //Atualizando
-            //c.setCodigo(21);
+            //c.setCodigo(1);
             //cdb.atualizar(c);
             
             //Deletando
-            cdb.excluir(4);
+            //cdb.excluir(4);
             
             //Listando
             List<Cliente> clientes = cdb.listarTodos();

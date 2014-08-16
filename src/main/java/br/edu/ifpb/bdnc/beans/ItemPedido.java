@@ -88,4 +88,8 @@ public class ItemPedido implements SQLData {
         stream.writeDouble(this.getPreco());
     }
 
+    @Override
+    public String toString() {
+        return "ItemPedido{" + "codigo=" + codigo + ", prod=" + prod + ", quantidade=" + quantidade + ", preco=" + preco + '}';
+    }
 }

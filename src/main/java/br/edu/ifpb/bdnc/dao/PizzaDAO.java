@@ -22,7 +22,8 @@ import java.util.Map;
  * @author magdiel-bruno
  */
 public class PizzaDAO {
-    public void persistit(Pizza p) throws SQLException {
+    public boolean persistit(Pizza p) throws SQLException {
+        boolean resultado = false;
         Connection connection = null;
         PreparedStatement pstmt = null;
         String sql = "insert into produtos values(?)";
@@ -31,13 +32,20 @@ public class PizzaDAO {
             pstmt = connection.prepareStatement(sql);
             pstmt.setObject(1, p);
             pstmt.executeQuery();
-        } finally {
+            resultado = true;
+        }catch(SQLException e){
+            e.printStackTrace();
+            resultado = false;
+        }finally {
             Oracle.close(pstmt);
             Oracle.close(connection);
         }
+        
+        return resultado;
     }
 
-    public void atualizar(Pizza p) throws SQLException {
+    public boolean atualizar(Pizza p) throws SQLException {
+        boolean resultado = false;
         Connection connection = null;
         PreparedStatement pstmt = null;
         String sql = "update produtos p set value(p) = ? where p.codigo = ?";
@@ -47,13 +55,19 @@ public class PizzaDAO {
             pstmt.setObject(1, p);
             pstmt.setObject(2, p.getCodigo());
             pstmt.executeQuery();
-        } finally {
+            resultado = true;
+        } catch(SQLException e ){
+            e.printStackTrace();
+            resultado = false;
+        }finally {
             Oracle.close(pstmt);
             Oracle.close(connection);
         }
+        return resultado;
     }
 
-    public void excluir(Pizza p) throws SQLException {
+    public boolean excluir(Pizza p) throws SQLException {
+        boolean resultado;
         Connection connection = null;
         PreparedStatement pstmt = null;
         String sql = "delete produtos p where p.codigo = ?";
@@ -62,10 +76,15 @@ public class PizzaDAO {
             pstmt = connection.prepareStatement(sql);
             pstmt.setObject(1, p.getCodigo());
             pstmt.executeQuery();
-        } finally {
+            resultado = true;
+        } catch(SQLException e){
+            e.printStackTrace();
+            resultado = false;
+        }finally {
             Oracle.close(pstmt);
             Oracle.close(connection);
         }
+        return resultado;
     }
 
     public List<Pizza> listarTodos() throws SQLException {
@@ -73,11 +92,12 @@ public class PizzaDAO {
 
         Connection connection = null;
         PreparedStatement stmt = null;
-        String sql = "select * from produtos p where value(p) is of (pizza) order by p.nome";
+        String sql = "select value(p) from produtos p where value(p) is of (only pizza) order by p.nome";
         try {
             connection = Oracle.getConnection();
             Map<String, Class<?>> map = connection.getTypeMap();
             map.put("PRODUTO", Produto.class);
+            map.put("PIZZA", Pizza.class);
 
             stmt = connection.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();

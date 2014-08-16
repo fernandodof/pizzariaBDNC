@@ -6,8 +6,8 @@ import java.sql.SQLData;
 import java.sql.SQLException;
 import java.sql.SQLInput;
 import java.sql.SQLOutput;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,11 +19,12 @@ import java.util.logging.Logger;
 
 public class Pedido implements SQLData{
     private int codigo;
-    private Date data;
+    private Timestamp data;
     private Cliente cli;
     private List<ItemPedido> itens = new ArrayList();
 
     public Pedido() {
+       
     }
 
     public int getCodigo() {
@@ -34,11 +35,11 @@ public class Pedido implements SQLData{
         this.codigo = codigo;
     }
 
-    public Date getData() {
+    public Timestamp getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(Timestamp data) {
         this.data = data;
     }
 
@@ -66,7 +67,7 @@ public class Pedido implements SQLData{
     @Override
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
         this.setCodigo(stream.readInt());
-        this.setData(stream.readDate());
+        this.setData(stream.readTimestamp());
         try {
             this.setCli((Cliente) DBUtils.getRef1(stream));
         }catch(NullPointerException ex){
@@ -88,7 +89,7 @@ public class Pedido implements SQLData{
     @Override
     public void writeSQL(SQLOutput stream) throws SQLException {
         stream.writeInt(this.getCodigo());
-        stream.writeDate((java.sql.Date) this.getData());
+        stream.writeTimestamp(this.getData());
         try {
             if(cli != null) {
                 DBUtils.setupRef(stream, cli, "CLIENTES", "codigo");
@@ -100,5 +101,9 @@ public class Pedido implements SQLData{
             Logger.getLogger(Pedido.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    @Override
+    public String toString() {
+        return "Pedido{" + "codigo=" + codigo + ", data=" + data + ", cli=" + cli + ", itens=" + itens + '}';
+    }
 }

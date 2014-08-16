@@ -74,7 +74,7 @@ CREATE OR REPLACE TYPE itensPedido AS TABLE OF itemPedido;
 --criando tipo pedido
 CREATE OR REPLACE TYPE pedido AS OBJECT(
 	codigo INT,
-	dataPedido date,
+	dataPedido timestamp,
 	cli REF cliente,
 	itens itensPedido
 );

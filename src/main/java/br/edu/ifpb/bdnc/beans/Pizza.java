@@ -46,4 +46,9 @@ public class Pizza extends Produto implements SQLData {
         stream.writeFloat(super.getPreco());
         stream.writeString(this.getIngredientes());
     }
+
+//    @Override
+//    public String toString() {
+//        return "Pizza{" + "ingredientes=" + ingredientes + '}';
+//    }   
 }
