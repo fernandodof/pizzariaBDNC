@@ -10,3 +10,24 @@
     margin-top: 250px;
     margin-left: -100px;
 }
+
+.separador{
+    margin-top: 10px;
+}
+
+.lbs{
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.qtde{
+    margin-left: 5px;
+}
+
+#btCadastrar{
+    margin-right: 22px;
+}
+
+#slCliente, #lbCliente{
+    margin-left: -15px;
+}

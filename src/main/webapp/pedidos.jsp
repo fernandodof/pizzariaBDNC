@@ -51,6 +51,7 @@
                             <th>Codigo</th>
                             <th>Data</th>
                             <th>Cliente</th>
+                            <th>Valor</th>
                             <th>Excluir</th>
                         </tr>
                     </thead>    
@@ -66,8 +67,16 @@
                                         <c:otherwise>
                                             ${pedido.cli.nome}
                                         </c:otherwise>
-                                    </c:choose></td>
+                                    </c:choose>
+                                </td>
                                 <td>
+                                    <c:set var="total" scope="page"/>
+                                    <c:forEach items="${pedido.itens}" var="item">
+                                        <c:set var="total" value="${total+item.preco}" />
+                                    </c:forEach>
+                                    <c:out value="${total}"/>
+                                </td>
+                                <td> 
                                     <form id="excluir" method="POST" action="ExcluirPedido">
                                         <button type="submit" name="codigo" value="${pedido.codigo}" class="btn"><span class="glyphicon glyphicon-remove"></span></button>
                                     </form>
