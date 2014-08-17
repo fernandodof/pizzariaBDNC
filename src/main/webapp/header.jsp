@@ -22,7 +22,7 @@
     <body>
         <div class="navbar navbar-default navbar-static-top">
             <div class="container">
-                <a href="index.jsp" class="navbar-brand">Pizzaria BDNC</a>
+                <a href="controlarPedido.jsp" class="navbar-brand">Pizzaria BDNC</a>
                 <button class="navbar-toggle" data-toggle = "collapse" data-target = ".custonNavHeaderCollapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -30,11 +30,11 @@
                 </button>
                 <div class="collapse navbar-collapse custonNavHeaderCollapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="index.jsp">Home</a></li>
+                        <li><a href="controlarPedido.jsp">Novos Pedidos</a></li>
                         <li><a href="produto.jsp">Produtos</a></li>
                         <li><a href="pedidos.jsp">Pedidos</a></li>
                         <li><a href="cliente.jsp">Clientes</a></li>
-                        <li><a href="#">Sobre</a></li>
+                        <li><a href="sobre.jsp">Sobre</a></li>
                     </ul>
                 </div>
 
