@@ -8,8 +8,10 @@
     </head>
     <body>
         <div class="container">
-            <div class="jumbotron"><h2>Pizzaria BDNC</h2></div>
-            <img src="imgs/product.png" class="img-responsive">
+            <div class="jumbotron"><h1>Pizzaria BDNC</h1>
+                <p>Projeto para banco de dados não convencionais utilizando oracle objeto realcinal</p>
+            </div>
+            <img src="imgs/product.png" class="img-responsive center-block">
         </div>
     </body>
 </html>
