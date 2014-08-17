@@ -1,8 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="br.edu.ifpb.bdnc.beans.Pedido"%>
 <%@page import="br.edu.ifpb.bdnc.dao.PedidoDAO"%>
-<%@page import="br.edu.ifpb.bdnc.dao.ProdutoDAO"%>
 <%@page import="java.util.List"%>
 <%@page import="br.edu.ifpb.bdnc.beans.Produto"%>
 <%@page import="br.edu.ifpb.bdnc.beans.Produto"%>
@@ -53,6 +51,7 @@
                             <th>Codigo</th>
                             <th>Data</th>
                             <th>Cliente</th>
+                            <th>Excluir</th>
                         </tr>
                     </thead>    
                     <tbody>
@@ -60,13 +59,25 @@
                             <tr>
                                 <td>${pedido.codigo}</td>
                                 <td>${pedido.data}</td>
-                                <td>${pedido.cli.nome}</td>
+                                <td><c:choose>
+                                        <c:when test="${pedido.cli == null}">
+                                            Pedido Local
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${pedido.cli.nome}
+                                        </c:otherwise>
+                                    </c:choose></td>
+                                <td>
+                                    <form id="excluir" method="POST" action="ExcluirPedido">
+                                        <button type="submit" name="codigo" value="${pedido.codigo}" class="btn"><span class="glyphicon glyphicon-remove"></span></button>
+                                    </form>
+                                </td>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
             </div>
-            <a href="controlarPedidio.jsp.jsp" class="btn btn-info">Novo pedido</a>
+            <a href="controlarPedido.jsp" class="btn btn-info">Novo pedido</a>
         </div>
     </body>
 </html>
