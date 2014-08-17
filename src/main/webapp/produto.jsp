@@ -83,6 +83,7 @@
                 </tbody>
             </table>
         </div>
+        <a class="btn btn-info" href="EditarProduto.jsp">Consultar produto</a>
 
         <c:if test="${sucesso != null and bebida != null}">
             <c:choose>

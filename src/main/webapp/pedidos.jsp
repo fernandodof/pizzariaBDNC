@@ -65,7 +65,7 @@
                                             Pedido Local
                                         </c:when>
                                         <c:otherwise>
-                                            ${pedido.cli.nome}
+                                            <a href="controlarCliente.jsp?cod=${pedido.cli.codigo}" class="btn pull-left">${pedido.cli.nome}</a>
                                         </c:otherwise>
                                     </c:choose>
                                 </td>

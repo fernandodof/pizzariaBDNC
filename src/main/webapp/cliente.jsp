@@ -21,6 +21,7 @@
     <script>
         $(document).ready(function() {
             $('#clientes').dataTable({
+                "order": [[1, "asc"]],
                 "language": {
                     "lengthMenu": "Exibir _MENU_ registros por pagina",
                     "zeroRecords": "Nada encontrado",
@@ -48,6 +49,7 @@
         <table id="clientes" class="table display">
             <thead>
                 <tr>
+                    <th>Código</th>
                     <th>Nome</th>
                     <th>Rua</th>
                     <th>Bairro</th>
@@ -60,6 +62,7 @@
             <tbody>
                 <c:forEach items="${clientes}" var="cliente">
                     <tr>
+                        <td>${cliente.codigo}</td>
                         <td>${cliente.nome}</td>
                         <td>${cliente.endereco.rua}</td>
                         <td>${cliente.endereco.bairro}</td>
@@ -79,6 +82,7 @@
             </tbody>
         </table>
     </div>
+    <a class="btn btn-info" href="controlarCliente.jsp">Consultar cliente</a>
     <a href="controlarCliente.jsp" class="btn btn-info">Cadastrar Cliente</a>
 
     <c:choose>

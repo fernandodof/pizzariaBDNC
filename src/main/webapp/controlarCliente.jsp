@@ -23,18 +23,28 @@
                 Cliente cliente = produtoDAO.getClientePorCodigo(cod);
 
                 pageContext.setAttribute("cliente", cliente);
-            }else{
+                pageContext.setAttribute("cod", request.getParameter("cod"));
+            } else {
                 pageContext.setAttribute("form", true);
             }
         %>
         <div class="container">    
             <h1>Cliente</h1>
+            <form class="col-md-6 col-md-offset-3" action="controlarCliente.jsp">
+                <label for="cod">Informe o código do cliente:</label>
+                <div class="form-group">
+                    <input type="text" name="cod" id="cod" class="form-control" placeholder="Codigo do Cliente" required value="${cod}">
+                </div>
+                <button type="submit" class="btn btn-success pull-right" name="botao">Consultar</button>
+            </form>
             <c:choose>
                 <c:when test="${cliente != null or form}">
                     <form role="form" class="col-md-6 col-md-offset-3" id="cadastroCliente" method="POST" action="CadastrarCliente">
+                        
                         <div class="form-group">
                             <input type="text" name="nome" class="form-control" placeholder="Nome do Cliente" required value="${cliente.nome}">
                         </div>
+                        
                         <div class="form-group">
                             <input type="text" name="rua" class="form-control" placeholder="Rua" required value="${cliente.endereco.rua}">
                         </div>

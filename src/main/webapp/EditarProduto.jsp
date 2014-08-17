@@ -23,10 +23,19 @@
                 Produto produto = produtoDAO.listarProdutoPorCodigo(cod);
 
                 pageContext.setAttribute("produto", produto);
+                pageContext.setAttribute("cod", request.getParameter("cod"));
             }
         %>
 
         <div class="container">
+            <h1>Produto</h1>
+            <form class="col-md-6 col-md-offset-3" id="consulta" action="EditarProduto.jsp">
+                <label for="cod">Informe o código do produto:</label>
+                <div class="form-group">
+                    <input type="text" name="cod" id="cod" class="form-control" placeholder="Codigo do Produto" required value="${cod}">
+                </div>
+                <button type="submit" class="btn btn-success pull-right" name="botao">Consultar</button>
+            </form>
             <c:choose>
                 <c:when test="${produto != null}">
                     <form class="form-group editar col-md-6 col-md-offset-3" method="POST" action="EditarProduto">
