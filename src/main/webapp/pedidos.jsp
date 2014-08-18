@@ -52,7 +52,7 @@
                             <th>Data</th>
                             <th>Cliente</th>
                             <th>Valor</th>
-                            <th>Excluir</th>
+                            <th>Editar/Excluir</th>
                         </tr>
                     </thead>    
                     <tbody>
@@ -72,11 +72,12 @@
                                 <td>
                                     <c:set var="total" scope="page" value="0"/>
                                     <c:forEach items="${pedido.itens}" var="item">
-                                        <c:set var="total" value="${total+item.preco}" />
+                                        <c:set var="total" value="${total+(item.preco*item.quantidade)}" />
                                     </c:forEach>
                                     <c:out value="${total}"/>
                                 </td>
                                 <td> 
+                                    <a href="editarPedido.jsp?cod=${pedido.codigo}" class="btn pull-left"><span class="glyphicon glyphicon-edit"></span></a>
                                     <form id="excluir" method="POST" action="ExcluirPedido">
                                         <button type="submit" name="codigo" value="${pedido.codigo}" class="btn"><span class="glyphicon glyphicon-remove"></span></button>
                                     </form>

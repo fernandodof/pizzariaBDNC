@@ -123,38 +123,6 @@ public class ProdutoDAO {
         }
     }
 
-    public List<Produto> listarTodasBebidas() throws SQLException {
-        List<Produto> produtos = new ArrayList<>();
-
-        Connection connection = null;
-        PreparedStatement stmt = null;
-        String sql = "select * from produtos p where value(p) is of (only produto) order by p.nome";
-        try {
-            connection = Oracle.getConnection();
-            Map<String, Class<?>> map = connection.getTypeMap();
-            map.put("PRODUTO", Produto.class);
-//            map.put("ENDERECO", Endereco.class);
-//            map.put("TELEFONE_CLIENTE", Telefone.class);
-
-            stmt = connection.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Produto produto = (Produto) rs.getObject(1);
-                produtos.add(produto);
-            }
-            rs.close();
-
-            return produtos;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            Oracle.close(stmt);
-            Oracle.close(connection);
-        }
-    }
-
     public Produto listarProdutoPorCodigo(int codigo) throws SQLException {
         Connection connection = null;
         PreparedStatement stmt = null;

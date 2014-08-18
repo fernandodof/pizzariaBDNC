@@ -19,9 +19,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import oracle.jdbc.OracleResultSet;
 
 /**
  *
@@ -52,7 +52,7 @@ public class PedidoDAO {
     public void atualizar(Pedido p) throws SQLException {
         Connection connection = null;
         PreparedStatement pstmt = null;
-        String sql = "UDATE PEDIDOS p SET VALUE(p) = ? WEHRE p.codigo = ?";
+        String sql = "UPDATE PEDIDOS p SET VALUE(p) = ? WHERE p.codigo = ?";
         try {
             connection = Oracle.getConnection();
             pstmt = connection.prepareStatement(sql);
@@ -110,6 +110,39 @@ public class PedidoDAO {
             rs.close();
 
             return pedidos;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            Oracle.close(stmt);
+            Oracle.close(connection);
+        }
+    }
+    
+    public Pedido listarPedidoPorCodigo(int codigo) throws SQLException {
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        String sql = "SELECT VALUE(p) FROM pedidos p WHERE p.codigo = ?";
+        try {
+            connection = Oracle.getConnection();
+            Map<String, Class<?>> map = connection.getTypeMap();
+            map.put("PEDIDO", Pedido.class);
+            map.put("CLIENTE", Cliente.class);
+            map.put("PRODUTO", Produto.class);
+            map.put("PIZZA", Pizza.class);
+            map.put("ENDERECO", Endereco.class);
+            map.put("TELEFONE_CLIENTE", Telefone.class);
+            map.put("ITEMPEDIDO", ItemPedido.class);;
+
+            stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, codigo);
+            OracleResultSet rs = (OracleResultSet) stmt.executeQuery();
+
+            rs.next();
+            Pedido pedido = (Pedido) rs.getObject(1);
+            rs.close();
+
+            return pedido;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

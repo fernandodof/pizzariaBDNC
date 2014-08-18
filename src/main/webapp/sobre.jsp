@@ -9,7 +9,8 @@
     <body>
         <div class="container">
             <div class="jumbotron"><h1>Pizzaria BDNC</h1>
-                <p>Projeto para banco de dados não convencionais utilizando oracle objeto realcinal</p>
+                <p>Projeto para banco de dados não convencionais utilizando oracle objeto relacional</p>
+                <p>Equipe: Fernando Ferreira & Magdiel Bruno</p>
             </div>
             <img src="imgs/product.png" class="img-responsive center-block">
         </div>
