@@ -33,17 +33,13 @@ public class Pizza extends Produto implements SQLData {
 
     @Override
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
-        super.setCodigo(stream.readInt());
-        super.setNome(stream.readString());
-        super.setPreco(stream.readFloat());
+        super.readSQL(stream, typeName);
         setIngredientes(stream.readString());
     }
 
     @Override
     public void writeSQL(SQLOutput stream) throws SQLException {
-        stream.writeInt(super.getCodigo());
-        stream.writeString(super.getNome());
-        stream.writeFloat(super.getPreco());
+        super.writeSQL(stream);
         stream.writeString(this.getIngredientes());
     }
 

@@ -1,3 +1,20 @@
+DROP VIEW produtos_vedidos;   
+DROP TABLE pedidos;
+DROP TYPE pedido;
+DROP TRIGGER pedido_trigger;
+DROP SEQUENCE pedido_seq;
+DROP TYPE itensPedido;
+DROP TYPE itemPedido;
+DROP TABLE produtos;
+DROP TYPE produto;
+DROP TRIGGER produto_trigger;
+DROP SEQUENCE produto_seq;
+DROP TYPE endereco;
+DROP TYPE telefone_cliente;
+DROP TABLE clientes;
+DROP TRIGGER cliente_trigger;
+DROP SEQUENCE cliente_seq;
+
 --criando o tipo endereco
 CREATE OR REPLACE TYPE endereco AS OBJECT(
 	rua VARCHAR(100),
@@ -96,10 +113,10 @@ FOR EACH ROW
    BEGIN
      SELECT pedido_seq.NEXTVAL INTO :new.codigo FROM dual;
    END;
-
---Criando visao para produtos vendidos
+   
 CREATE OR REPLACE VIEW produtos_vendidos AS
 SELECT DISTINCT i.prod.codigo cod FROM pedidos p, table (p.itens) i     
+
 
 --Inserindo cliente (null para codigo, que será gerado pela sequencia+gatilho)
 INSERT INTO clientes VALUES (cliente(null,'Fernando Ferreira', endereco('rua1','bairro 1','numero 1','cep 1'),Telefone_cliente(83,'1234-5678')));   
@@ -125,6 +142,10 @@ INSERT INTO clientes VALUES (cliente(null,'Denis', endereco('rua 19','bairro 19'
 INSERT INTO clientes VALUES (cliente(null,'Viviano', endereco('rua 20','bairro 20','numero 20','cep 20'),Telefone_cliente(83,'1232-5678'))); 
 INSERT INTO clientes VALUES (cliente(null,'Usain Bolt', endereco('rua 21','bairro 21','numero 21','cep 21'),Telefone_cliente(83,'1232-5678'))); 
 
+SELECT * FROM clientes
+
+DELETE FROM clientes WHERE codigo >2 
+ COMMIT ;
 --Inserindo produtos
 INSERT INTO produtos VALUES (produto(null,'Coca-Cola',4.50));
 INSERT INTO produtos VALUES (produto(NULL,'Agua de Côco'2.00));
